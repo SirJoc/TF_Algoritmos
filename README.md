@@ -6,6 +6,6 @@
 <ul>
 	<li>Nos ayudan a buscar eficientemente</li>
 	<li>Son importantes para buscar</li>
-	<li>Organiza productos de distintos rubros</li>
+	<li>Organiza productos de distintas características</li>
 	<li>Suscitan interés</li>
 </ul>
