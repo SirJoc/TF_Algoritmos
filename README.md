@@ -16,8 +16,8 @@
 <blockquote>
 	
 			
-				"Esto es como una cita para texto académico. Don't worry about that child."
-				<br/>
+		"Esto es como una cita para texto académico. Don't worry about that child."
+		<br/>
 				(Olaya. J 2019).
 			
 </blockquote>
