@@ -1,22 +1,11 @@
 # "TF_Algoritmos"
-<em> Hola papu </em>
+
+<em> El uso de un programa administrador de archivos consiste en utilizar de manera eficiente los datos adquiridos para utilizarlos nuevamente en proyectos actuales, por ejemplo, en listas de productos como una tienda o para almacenes. Un programa administrador de archivos es importante porque:  
+</em>
+
 <ul>
-			<li>Manzana
-				<ol>
-					<li>Roja</li>
-					<li>Verde</li>
-				</ol>
-			</li>
-			<li>Naranja</li>
-			<li>Pera</li>
-			<li>Sandia</li>
-		</ul>
-
-
-	
-			
-		"Esto es como una cita para texto académico. Don't worry about that child."
-		(Olaya. J 2019).
-			
-
-
+	<li>Nos ayudan a buscar eficientemente</li>
+	<li>Son importantes para buscar</li>
+	<li>Organización de productos</li>
+	<li>Suscitan interés</li>
+</ul>
