@@ -15,11 +15,11 @@
 <p>
 <blockquote>
 	
-			<p>
+			
 				"Esto es como una cita para texto académico. Don't worry about that child."
 				<br/>
 				(Olaya. J 2019).
-			</p>
+			
 </blockquote>
 </p>
 
