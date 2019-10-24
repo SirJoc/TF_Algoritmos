@@ -13,3 +13,28 @@ El trabajo final tiene por nombre FILEEXP, consiste en el desarrollo de un softw
 Para este trabajo final, aplicaremos los conocimientos adquiridos a lo largo del curso, tales como árboles binarios y algoritmos de ordenamiento y búsqueda. Este trabajo será realizado en el Lenguaje C++ y nos organizaremos gracias al uso de GitHub, donde podemos asignar responsabilidades para una fecha establecida. Gracias a esta herramienta, podemos dividir nuestro proyecto en milestones e issues y avanzar de forma más ordenada.
 
 Nosotros esperamos que este proyecto pueda cumplir con todas las funciones y requerimientos solicitados en el tiempo establecido. Para esto debemos cumplir con el plazo de establecido para cada trabajo en GitHub.
+
+Map in C++ Standard Template Library (STL)
+
+	son contenedores asociativos que almacenan elementos de forma mapeada. 
+	Cada elemento tiene un valor clave y un valor mapeado. 
+	No hay dos valores asignados que puedan tener los mismos valores clave.
+
+
+	a) Algunas funciones básicas asociadas con Map:
+	begin ()
+	end ()
+	size ()
+	max_size ()
+	empty ()
+	par insert (keyvalue, mapvalue)
+	borrar (posición del iterador) 
+	borrar (const g)
+	clear ()
+
+
+Data frames:
+Los data frames son estructuras de datos de dos dimensiones (rectangulares)
+que pueden contener datos de diferentes tipos, por lo tanto, son heterogéneas. 
+Esta estructura de datos es la más usada para realizar análisis de datos
+Podemos entender a los data frames como una versión más flexible de una matriz 
