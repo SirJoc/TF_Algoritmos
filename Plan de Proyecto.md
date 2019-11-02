@@ -56,17 +56,13 @@ Podemos entender a los data frames como una versión más flexible de una matriz
 
 
 ### Requerimientos:
-R01: El sistema debe permitir al usuario escanear archivos y carpetas en una determinada ruta.
+*R01: El sistema debe permitir al usuario escanear archivos y carpetas en una determinada ruta.
+*R02: El sistema debe permitir al usuario mostrar los datos de cada columna en el programa.
+*R03: El sistema debe permitir al usuario indexar por columnas.
+*R04: El sistema debe permitir al usuario Buscar por columna.
+*R05: El sistema debe permitir al usuario Filtrar datos por columnas, esto considera distintas características, tales como considerando el criterio de los nombres (empieza con, termina con y contiene) o el tamaño del dato (Mayor a, menor a, igual a).
 
-R02: El sistema debe permitir al usuario mostrar los datos de cada columna en el programa.
-
-R03: El sistema debe permitir al usuario indexar por columnas.
-
-R04: El sistema debe permitir al usuario Buscar por columna.
-
-R05: El sistema debe permitir al usuario Filtrar datos por columnas, esto considera distintas características, tales como considerando el criterio de los nombres (empieza con, termina con y contiene) o el tamaño del dato (Mayor a, menor a, igual a).
-
-R06: El sistema debe permitir al usuario poder ordenar la columna seleccionada.
+*R06: El sistema debe permitir al usuario poder ordenar la columna seleccionada.
 
 R07: El sistema mostrará un mensaje indicando si hubo un error al momento de ingresar un dato.
 
