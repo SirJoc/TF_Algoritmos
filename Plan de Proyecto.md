@@ -77,4 +77,4 @@ R08: El sistema permite al usuario mantener actualizado el administrador de arch
 
 
 ### Interfaz de Proyecto
-![Texto alternativo](menu.png)
+![Texto alternativo](menu.PNG)
