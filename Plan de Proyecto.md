@@ -72,6 +72,7 @@ R07: El sistema mostrará un mensaje indicando si hubo un error al momento de in
 
 R08: El sistema permite al usuario mantener actualizado el administrador de archivos, mediante nuevos registros de datos, es decir, agregando nueva información.
 
+### Diagrama de clases
 ![Texto alternativo](Diagrama.png)
 
 
