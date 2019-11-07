@@ -72,6 +72,14 @@ R07: El sistema mostrará un mensaje indicando si hubo un error al momento de in
 
 R08: El sistema permite al usuario mantener actualizado el administrador de archivos, mediante nuevos registros de datos, es decir, agregando nueva información.
 
+R09: El sistema le permite al usuario crear una cuenta con una contraseña.
+
+R10: El sistema le permite a las empresas ingresar diversos productos.
+
+R11: El sistema le permite a las empresas de almacenes, ingresar nuevos productos o cambiar algunas de sus características.
+
+R12: El sistema le permite a las empresas de almacenes configuar el archivo mostrado y crear uno nuevo.
+
 ### Diagrama de clases
 ![Texto alternativo](Diagrama.png)
 
