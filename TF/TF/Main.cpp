@@ -9,7 +9,7 @@ using namespace System;
 namespace fs = experimental::filesystem;
 
 
-void menu()
+void fileexp()
 {
 	cout << "\n\n\t\t\t $$$$$$$$\\ $$$$$$\\ $$\\       $$$$$$$$\\ $$$$$$$$\\ $$\\   $$\\ $$$$$$$\\" << endl;
 	cout << "\t\t\t $$  _____|\\_$$  _|$$ |      $$  _____|$$  _____|$$ |  $$ |$$  __$$\\" << endl;
@@ -19,16 +19,19 @@ void menu()
 	cout << "\t\t\t $$ |        $$ |  $$ |      $$ |      $$ |      $$  /\\$$\\ $$ |" << endl;
 	cout << "\t\t\t $$ |      $$$$$$\\ $$$$$$$$\\ $$$$$$$$\\ $$$$$$$$\\ $$ /  $$ |$$ |" << endl;
 	cout << "\t\t\t \\__|      \\______|\\________|\\________|\\________|\\__|  \\__|\\__|" << endl;
+}
 
-	cout << "\t\t\t\t      " << "\t\t\t\t\t    " << endl;
-	cout << "\t\t\t\t      " << "\t\t       OPCIONES\t\t    " << endl;
-	cout << "\t\t\t\t      " << "\t\t\t\t\t    " << endl;
-	cout << "\t\t\t\t      " << "A. FILTRAR DATOS DE LOS PRODUCTOS POR COLUMNAS " << endl;
-	cout << "\t\t\t\t      " << "B. ORDENAR PRODUCTOS\t\t    " << endl;
-	cout << "\t\t\t\t      " << "C. GUARDAR ARCHIVO DE PRODUCTOSt\t    " << endl;
-	cout << "\t\t\t\t      " << "D. AÑADIR OTRO ARCHIVO DE PRODUCTOS\t\t    " << endl;
-	cout << "\t\t\t\t      " << "D. INDEXAR COLUMNA\t\t    " << endl;
-	cout << "\t\t\t\t      " << "0. Salir           \t\t    " << endl;
+
+void menu()
+{
+	cout << "\n\n\t\t\t\t" << "\t\t OPCIONES" << endl;
+	cout << "\n\n\t\t\t\t" << "1. INDEXAR ARCHIVOS DE LA CARPETA" << endl;
+	cout << "\t\t\t\t" << "2. BUSQUEDA DE ARCHIVOS" << endl;
+	cout << "\t\t\t\t" << "3. FILTRAR CONTENIDO DE LOS ARCHIVOS POR CARACTERISTICA" << endl;
+	cout << "\t\t\t\t" << "4. FILTRAR DATOS POR COLUMNAS" << endl;
+	cout << "\t\t\t\t" << "5. ORDENAMIENTO" << endl;
+	cout << "\t\t\t\t" << "0. Salir" << endl;
+	cout << "\n\t\t\t\t" << "Eleccion : ";
 }
 
 bool loggeado()
@@ -259,13 +262,10 @@ vector<int> ordenar_MayToMen(vector<T>& filename)
 
 void main() {
 
-	Console::SetWindowSize(115, 28);
+	Console::SetWindowSize(115, 45);
 	if (1)
 	{
-		system("cls");
-		menu();
-		system("pause>0");
-		system("cls");
+		fileexp();
 		vector<fs::directory_entry> vec;
 		vector<string> filename;
 		vector<string> extension;
@@ -276,14 +276,12 @@ void main() {
 		vector<int> _produccion;
 		vector<int> _vencimiento;
 		string _archivo;
-		cout << "	Ingrese el nombre del archivo que quiere explorar: "; cin >> _archivo; cout << endl;
+		cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 		fs::path RUTA{ _archivo };
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
 		}
-
-		cout << "Nombre\tExtension\tTamaño" << endl;
 		for (int i = 0; i < vec.size(); i++)
 		{
 			fs::path aPath = vec[i];
@@ -300,8 +298,6 @@ void main() {
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
-			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
-
 		}
 
 		for (int i = 0; i < vec.size(); i++)
@@ -341,41 +337,174 @@ void main() {
 			}
 			f.close();
 		}
-		cout << "Nombre\t\tCodigo\tStock\tProduccion\tVencimiento" << endl;
-		for (int i = 0; i < vec.size(); i++)
+		int opt_menu;
+		while (!!!!!!!!!!!!!!!!!!1)
 		{
-			cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;
-		}
-		system("pause>0");
-		system("cls");
+			do
+			{
+				system("cls");
+				fileexp();
+				menu();
+				cin >> opt_menu;
+			} while (opt_menu > 5 || opt_menu < 0);
+			switch (opt_menu)
+			{
+			case 1:
+			{
+				system("cls");
+				cout << "Nombre\tExtension\tSize" << endl;
+				for (int i = 0; i < vec.size(); i++)
+				{
+					cout << filename[i] << "\t" << extension[i] << "\t\t" << size[i] << "B" << endl;
+				}
+				break;
+			}
+			case 2:
+			{
+				//falta
+				break;
+			}
+			case 3:
+			{
+				cout << "Nombre\t\tCodigo\tStock\tProduccion\tVencimiento" << endl;
+				for (int i = 0; i < vec.size(); i++)
+				{
+					cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;
+				}
+				string _eleccion;
+				cout << "Ingrese el nombre de la caracteristica para indexar : "; cin >> _eleccion;
+				if (_eleccion == "Codigo")
+				{
+					index_c(_nombre, _codigo);
+				}
+				if (_eleccion == "Stock")
+				{
+					index_c(_nombre, _stock);
+				}
+				if (_eleccion == "Produccion")
+				{
+					index_c(_nombre, _produccion);
+				}
+				if (_eleccion == "Vencimiento")
+				{
+					index_c(_nombre, _vencimiento);
+				}
+				break;
+			}
+			case 4:
+			{
+				string opt_3;
+				int desc_3;
+				char tecla_3;
+				int num_3;
+				cout << "Nombre\tExtension\tSize" << endl;
+				for (int i = 0; i < vec.size(); i++)
+				{
+					cout << filename[i] << "\t" << extension[i] << "\t\t" << size[i] << "B" << endl;
+				}
+				cout << "Ingrese el nombre de la columna que desea filtrar(Nombre o Size) : "; cin >> opt_3;
+				if (opt_3 == "Nombre")
+				{
+					do
+					{
+						cout << "\n1. Empieza con :";
+						cout << "\n2. Finaliza con :";
+						cout << "\n3. Contiene :";
+						cout << "\nEleccion :";
+						cin >> desc_3;
+					} while (desc_3 > 3 || desc_3 < 0);
+					if (desc_3 == 1)
+					{
+						cout << "Ingrese la letra con la que inicia : "; cin >> tecla_3;
+						mostrar(empiezacon(filename, tecla_3), filename, extension, size);
+					}
+					else if (desc_3 == 2)
+					{
+						cout << "Ingrese la letra con la que finaliza : "; cin >> tecla_3;
+						mostrar(terminacon(filename, tecla_3), filename, extension, size);
+					}
+					else if (desc_3 == 3)
+					{
+						cout << "Ingrese la letra que contiene : "; cin >> tecla_3;
+						mostrar(contiene(filename, tecla_3), filename, extension, size);
+					}	
+					break;
+				}
+				else if (opt_3 == "Size")
+				{
+					do
+					{
+						cout << "\n1. Mayor a :";
+						cout << "\n2. Menor a :";
+						cout << "\n3. Igual a :";
+						cout << "\nEleccion :";
+						cin >> desc_3;
+					} while (desc_3 > 3 || desc_3 < 0);
+					if (desc_3 == 1)
+					{
+						cout << "Ingrese el parametro : "; cin >> num_3;
+						mostrar(MayorA(size, num_3), filename, extension, size);
+					}
+					else if (desc_3 == 2)
+					{
+						cout << "Ingrese el parametro : "; cin >> num_3;
+						mostrar(MenorA(size, num_3), filename, extension, size);
+					}
+					else if (desc_3 == 3)
+					{
+						cout << "Ingrese el parametro : "; cin >> num_3;
+						mostrar(IgualA(size, num_3), filename, extension, size);
+					}
 
-		string _eleccion;
-		cout << "Ingrese el nombre de la caracteristica para indexar : "; cin >> _eleccion;
-		if (_eleccion == "Codigo")
-		{
-			index_c(_nombre, _codigo);
-		}
-		if (_eleccion == "Stock")
-		{
-			index_c(_nombre, _stock);
-		}
-		if (_eleccion == "Produccion")
-		{
-			index_c(_nombre, _produccion);
-		}
-		if (_eleccion == "Vencimiento")
-		{
-			index_c(_nombre, _vencimiento);
-		}
-		/*cout << "ingrese tecla :";
-		int t;
-		cin >> t;*/
-		//cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
-		//cout << filename[terminacon(filename, t)] << "\t" << extension[terminacon(filename, t)] << "\t" << size[terminacon(filename, t)] << endl;
-		//cout << filename[contiene(filename, t)] << "\t" << extension[contiene(filename, t)] << "\t" << size[contiene(filename, t)] << endl;
-		//mostrar(empiezacon(filename, t), filename, extension, size);
-		//mostrar(IgualA(size, t), filename, extension, size);
-		mostrar(ordenar_MayToMen<int>(size), filename, extension, size);
+					break;
+				}			
+			}
+			case 5:
+			{
+				string another;
+				int gaa;
+				cout << "Bajo que caracteristica desea ordenar(Nombre o Size) : ";  cin >> another;
+				if (another == "Nombre")
+				{
+					do
+					{
+						cout << "\n1.Ascendente : ";
+						cout << "\n2.Descendente : ";
+						cout << "\nEleccion :";
+						cin >> gaa;
+					} while (gaa > 2 || gaa < 1);
+					if (gaa = 1)
+					{
+						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size);
+					}
+					else if (gaa = 2)
+					{
+						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size);
+					}
+				}
+				else if (another == "Size")
+				{
+					do
+					{
+						cout << "\n1.Ascendente : ";
+						cout << "\n2.Descendente : ";
+						cout << "\nEleccion :";
+						cin >> gaa;
+					} while (gaa > 2 || gaa < 1);
+					if (gaa = 1)
+					{
+						mostrar(ordenar_MenToMay<int>(size), filename, extension, size);
+					}
+					else if (gaa = 2)
+					{
+						mostrar(ordenar_MayToMen<int>(size), filename, extension, size);
+					}
+				}
+				break;
+			}
+			}
+			system("pause>0");
+		}		
 	}
 	cin.ignore();
 	system("pause>0");
