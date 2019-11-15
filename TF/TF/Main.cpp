@@ -1,6 +1,6 @@
 #include "AVL.h"
+#include "QuickSortT.h"
 #include "Producto.h"
-#include <vector>
 #include <sstream>
 #include <fstream>
 #include <filesystem>
@@ -211,13 +211,51 @@ vector<int> IgualA(vector<int> size, int a)
 
 void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size)
 {
+	cout << "Nombre\t\tExtension\tTamaño" << endl;
 	for (int i = 0; i < pos.size(); ++i)
 	{
-		cout << filename[pos[i]] << "\t" << extension[pos[i]] << "\t" << size[pos[i]] << endl;
+		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << endl;
 	}
 
 }
 
+template <typename T>
+vector<int> ordenar_MenToMay(vector<T>& filename)
+{
+	vector<T> aux = filename;
+	vector<int> pos;
+	quicksortMenToMay(filename, filename.size());
+	for (int i = 0; i < filename.size(); i++)
+	{
+		for (int j = 0; j < filename.size(); ++j)
+		{
+			if (filename[i] == aux[j])
+			{
+				pos.push_back(j);
+			}
+		}
+	}
+	return pos;
+}
+
+template <typename T>
+vector<int> ordenar_MayToMen(vector<T>& filename)
+{
+	vector<T> aux = filename;
+	vector<int> pos;
+	quicksortMayToMen(filename, filename.size());
+	for (int i = 0; i < filename.size(); i++)
+	{
+		for (int j = 0; j < filename.size(); ++j)
+		{
+			if (filename[i] == aux[j])
+			{
+				pos.push_back(j);
+			}
+		}
+	}
+	return pos;
+}
 
 void main() {
 
@@ -329,14 +367,15 @@ void main() {
 		{
 			index_c(_nombre, _vencimiento);
 		}
-		cout << "ingrese tecla :";
+		/*cout << "ingrese tecla :";
 		int t;
-		cin >> t;
+		cin >> t;*/
 		//cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
 		//cout << filename[terminacon(filename, t)] << "\t" << extension[terminacon(filename, t)] << "\t" << size[terminacon(filename, t)] << endl;
 		//cout << filename[contiene(filename, t)] << "\t" << extension[contiene(filename, t)] << "\t" << size[contiene(filename, t)] << endl;
 		//mostrar(empiezacon(filename, t), filename, extension, size);
-		mostrar(IgualA(size, t), filename, extension, size);
+		//mostrar(IgualA(size, t), filename, extension, size);
+		mostrar(ordenar_MayToMen<int>(size), filename, extension, size);
 	}
 	cin.ignore();
 	system("pause>0");
