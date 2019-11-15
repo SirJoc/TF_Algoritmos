@@ -132,6 +132,18 @@ int empiezacon(vector<string> Nombre, char a)
 	}
 }
 
+int terminacon(vector<string> Nombre, char a)
+{
+	for (int i = 0; i < Nombre.size(); i++)
+	{
+		string compare = Nombre[i];
+		if (compare[compare.size()-1] == a)
+		{
+			return i;
+		}
+	}
+}
+
 
 void main() {
 
