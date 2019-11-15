@@ -1,3 +1,4 @@
+#include "AVL.h"
 #include "Producto.h"
 #include <vector>
 #include <sstream>
@@ -6,7 +7,7 @@
 using namespace System;
 namespace fs = experimental::filesystem;
 
-void fileexp()
+void menu()
 {
 	cout << "\n\n\t\t\t $$$$$$$$\\ $$$$$$\\ $$\\       $$$$$$$$\\ $$$$$$$$\\ $$\\   $$\\ $$$$$$$\\" << endl;
 	cout << "\t\t\t $$  _____|\\_$$  _|$$ |      $$  _____|$$  _____|$$ |  $$ |$$  __$$\\" << endl;
@@ -130,150 +131,77 @@ bool SOS()
 	}
 }
 
-void main() {
-	vector<fs::directory_entry> vec;
-	vector<string> _nombre;
-	vector<int> _codigo;
-	vector<int> _stock;
-	vector<int> _produccion;
-	vector<int> _vencimiento;
-	fs::path RUTA{ "archivos" };
-	for (auto& p : fs::recursive_directory_iterator(RUTA))
-	{
-		vec.push_back(p);
-	}
 
-	cout << "Nombre\tExtension\tTamaño" << endl;
-	for (int i = 0; i < vec.size(); i++)
+void index_c(vector<string> Nombre, vector<int> Eleccion)
+{
+	AVLTree<int> elec;
+	for (int i = 0; i < Eleccion.size(); i++)
 	{
-		fs::path aPath = vec[i];
-		string Name;
-		for (int i = 0; i < aPath.filename().string().size(); i++)
-		{
-			if (aPath.filename().string()[i] == 46)
-			{
-				break;
-			}
-			Name += aPath.filename().string()[i];
-		}
-		cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
+		cout << Nombre[i] << "\t" << Eleccion[i] << endl;
+		elec.Add(Eleccion[i]);
 	}
-	int opt;
+}
+
+int empiezacon(vector<string> Nombre, char a)
+{
+	for (int i = 0; i < Nombre.size(); i++)
+	{
+		string compare = Nombre[i];
+		if (compare[0] == a)
+		{
+			return i;
+		}
+	}
+}
+
+int terminacon(vector<string> Nombre, char a)
+{
+	for (int i = 0; i < Nombre.size(); i++)
+	{
+		string compare = Nombre[i];
+		if (compare[compare.size()-1] == a)
+		{
+			return i;
+		}
+	}
+}
+
+
+void main() {
+
 	Console::SetWindowSize(115, 28);
-	fileexp();
-	if (1)
+	if (SOS())
 	{
 		system("cls");
-		fileexp();		
-		do {
-			menu();
-			cin >> opt;
-		} while (opt > 4 || opt < 0);
-		switch (opt)
+		menu();
+		system("pause>0");
+		system("cls");
+		vector<fs::directory_entry> vec;
+		vector<string> _nombre;
+		vector<int> _codigo;
+		vector<int> _stock;
+		vector<int> _produccion;
+		vector<int> _vencimiento;
+		fs::path RUTA{ "archivos" };
+		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
-		case 1:
-		{
-			("cls");
-			string _name;
-			fileexp();
-			cout << "Ingre el nombre de la columna por la que quiere ordenar : " << endl;
-			cin >> _name;
-			int _opt1;
-			do
-			{
-				cout << "1. Ascendente" << endl;
-				cout << "2. Descendente" << endl;
-				cin >> _opt1;
-			} while (_opt1 > 2 || _opt1 < 1);
+			vec.push_back(p);
+		}
 
-			if (_opt1 == 1)
-			{
-				odenar_columna(_name);	//funcion pa ordenar menor a mayor gaaaa
-			}
-			else if (_opt1 == 2)
-			{
-				odenar_columna(_name);	//funcion pa ordenar mayor a menor gaaaa
-			}
-			break;
-		}
-		case 2:
+		cout << "Nombre\tExtension\tTamaño" << endl;
+		for (int i = 0; i < vec.size(); i++)
 		{
-			char tecla;
-			int _opt2;
-			("cls");
-			fileexp();
-			do {
-				menu_N();
-				cin >> _opt2;
-			} while (_opt2 > 3 || _opt2 < 1);
-			switch (_opt2)
+			fs::path aPath = vec[i];
+			string Name;
+			for (int i = 0; i < aPath.filename().string().size(); i++)
 			{
-			case 1:	
-			{
-				cout << "Ingrese la letra con la que inicia : " << endl; cin >> tecla;
-				buscar_letrainicial(tecla); //funcion para buscar por la letra;
-				break;
+				if (aPath.filename().string()[i] == 46)
+				{
+					break;
+				}
+				Name += aPath.filename().string()[i];
 			}
-			case 2:
-			{
-				cout << "Ingrese la letra con la que termina : " << endl; cin >> tecla;
-				buscar_letrafinal(tecla); //funcion para buscar por la letra;
-				break;
-			}
-			case 3:
-			{
-				cout << "Ingrese la letra que contiene : " << endl; cin >> tecla;
-				buscar_contiene(tecla); //funcion para buscar por la letra;
-				break;
-			}
-			}
-			break;
-		}
-		case 3:
-		{
-			int tecla1;
-			int _opt3;
-			("cls");
-			fileexp();
-			do {
-				menu_N();
-				cin >> _opt3;
-			} while (_opt3 > 3 || _opt3 < 1);
-			switch (_opt3)
-			{
-			case 1:
-			{
-				cout << "Ingrese la cantidad a la que sera mayor: " << endl; cin >> tecla1;
-				buscar_mayor(tecla1); //funcion para buscar por la letra;
-				break;
-			}
-			case 2:
-			{
-				cout << "Ingrese la cantidad a la que sera menor : " << endl; cin >> tecla1;
-				buscar_menor(tecla1); //funcion para buscar por la letra;
-				break;
-			}
-			case 3:
-			{
-				cout << "Ingrese la cantidad a la que sera igual : " << endl; cin >> tecla1;
-				buscar_igual(tecla1); //funcion para buscar por la letra;
-				break;
-			}
-			}
-			break;
-		}
-		case 4:
-		{
-			string columna;
-			cout << "Ingrese el nombre de la caracteristica por la cual quiere indexar : " << endl; cin >> columna;
-			indexar(columna);
-			break;
-		}
-		case 5:
-		{
-			exit(1);
-			break;
-		}
+			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 		}
 
 		for (int i = 0; i < vec.size(); i++)
@@ -311,13 +239,40 @@ void main() {
 					_vencimiento.push_back(obj_producto->get_Vencimiento());
 				}
 			}
+			f.close();
 		}
 		cout << "Nombre\t\tCodigo\tStock\tProduccion\tVencimiento" << endl;
 		for (int i = 0; i < vec.size(); i++)
 		{
-			cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;;
+			cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;
 		}
-	}	
+		system("pause>0");
+		system("cls");
 
-	system("pause>0");;
+		string _eleccion;
+		cout << "Ingrese el nombre de la caracteristica para indexar : "; cin >> _eleccion;
+		if (_eleccion == "Codigo")
+		{
+			index_c(_nombre, _codigo);		
+		}
+		if (_eleccion == "Stock")
+		{
+			index_c(_nombre, _stock);
+		}
+		if (_eleccion == "Produccion")
+		{
+			index_c(_nombre, _produccion);
+		}
+		if (_eleccion == "Vencimiento")
+		{
+			index_c(_nombre, _vencimiento);
+		}
+		cout << "ingrese tecla :";
+		char t;
+		cin >> t;
+		cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
+	
+	}	
+	cin.ignore();
+	system("pause>0");
 }
