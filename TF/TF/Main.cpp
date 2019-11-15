@@ -167,6 +167,48 @@ vector<int> terminacon(vector<string> Nombre, char a)
 	return pos;
 }
 
+
+vector<int> MayorA(vector<int> size, int a)
+{
+	vector<int> pos;
+	for (int i = 0; i < size.size(); i++)
+	{
+		
+		if (size[i] > a)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
+vector<int> MenorA(vector<int> size, int a)
+{
+	vector<int> pos;
+	for (int i = 0; i < size.size(); i++)
+	{
+
+		if (size[i] < a)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
+vector<int> IgualA(vector<int> size, int a)
+{
+	vector<int> pos;
+	for (int i = 0; i < size.size(); i++)
+	{
+		if (size[i] == a)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
 void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size)
 {
 	for (int i = 0; i < pos.size(); ++i)
@@ -288,12 +330,13 @@ void main() {
 			index_c(_nombre, _vencimiento);
 		}
 		cout << "ingrese tecla :";
-		char t;
+		int t;
 		cin >> t;
 		//cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
 		//cout << filename[terminacon(filename, t)] << "\t" << extension[terminacon(filename, t)] << "\t" << size[terminacon(filename, t)] << endl;
 		//cout << filename[contiene(filename, t)] << "\t" << extension[contiene(filename, t)] << "\t" << size[contiene(filename, t)] << endl;
-		mostrar(empiezacon(filename, t), filename, extension, size);
+		//mostrar(empiezacon(filename, t), filename, extension, size);
+		mostrar(IgualA(size, t), filename, extension, size);
 	}
 	cin.ignore();
 	system("pause>0");
