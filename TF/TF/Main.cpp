@@ -4,8 +4,10 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
+
 using namespace System;
 namespace fs = experimental::filesystem;
+
 
 void menu()
 {
@@ -17,45 +19,23 @@ void menu()
 	cout << "\t\t\t $$ |        $$ |  $$ |      $$ |      $$ |      $$  /\\$$\\ $$ |" << endl;
 	cout << "\t\t\t $$ |      $$$$$$\\ $$$$$$$$\\ $$$$$$$$\\ $$$$$$$$\\ $$ /  $$ |$$ |" << endl;
 	cout << "\t\t\t \\__|      \\______|\\________|\\________|\\________|\\__|  \\__|\\__|" << endl;
+
+	cout << "\t\t\t\t      " << "\t\t\t\t\t    " << endl;
+	cout << "\t\t\t\t      " << "\t\t       OPCIONES\t\t    " << endl;
+	cout << "\t\t\t\t      " << "\t\t\t\t\t    " << endl;
+	cout << "\t\t\t\t      " << "A. FILTRAR DATOS DE LOS PRODUCTOS POR COLUMNAS " << endl;
+	cout << "\t\t\t\t      " << "B. ORDENAR PRODUCTOS\t\t    " << endl;
+	cout << "\t\t\t\t      " << "C. GUARDAR ARCHIVO DE PRODUCTOSt\t    " << endl;
+	cout << "\t\t\t\t      " << "D. AÑADIR OTRO ARCHIVO DE PRODUCTOS\t\t    " << endl;
+	cout << "\t\t\t\t      " << "D. INDEXAR COLUMNA\t\t    " << endl;
+	cout << "\t\t\t\t      " << "0. Salir           \t\t    " << endl;
 }
-void menu()
-{
-	cout << "\t\t\t\t      " << "\n\n\n\t\t\t\t\t\tOPCIONES\t\t    " << endl;
-	cout << "\t\t\t\t      " << "1. ORDENAR ARCHIVOS\t\t" << endl;
-	cout << "\t\t\t\t      " << "2. FILTRAR ARCHIVOS POR NOMBRE\t" << endl;
-	cout << "\t\t\t\t      " << "3. FILTRAR ARCHIVOS POR TAMAÑO\t\t" << endl;
-	cout << "\t\t\t\t      " << "4. INDEXAR ARCHIVO POR CARACTERISTICA\t\t" << endl;
-	cout << "\t\t\t\t      " << "0. Salir" << endl;
-}
-void lil_menu()
-{
-	cout << "\t\t\t\t Ingresa el criterio por el cual quieres filtrar: " << endl;
-	cout << "\t\t\t\t 1. Mayor " << endl;
-	cout << "\t\t\t\t 2. Menor " << endl;
-	cout << "\t\t\t\t 3. Inicia con " << endl;
-	cout << "\t\t\t\t 4. Termina con " << endl;
-	cout << "\t\t\t\t 5. Contenido en " << endl;
-	cout << "\t\t\t\t 6. Igual a " << endl;
-}
-void menu_N()
-{
-	cout << "\t\t\t\t Ingresa el criterio por el cual quieres filtrar: " << endl;
-	cout << "\t\t\t\t 1. Inicia con " << endl;
-	cout << "\t\t\t\t 2. Termina con " << endl;
-	cout << "\t\t\t\t 3. Contenido en " << endl;
-}
-void menu_T()
-{
-	cout << "\t\t\t\t Ingresa el criterio por el cual quieres filtrar: " << endl;
-	cout << "\t\t\t\t 1. Mayor " << endl;
-	cout << "\t\t\t\t 2. Menor " << endl;
-	cout << "\t\t\t\t 3. Igual a " << endl;
-}
+
 bool loggeado()
 {
 	std::string usuario, contra, user, pass;
-	std::cout << "\t\t\t\t\tIngrese el Usuario: \n\t\t\t\t\t"; std::cin >> usuario;
-	std::cout << "\t\t\t\t\tIngrese la contraseña: \n\t\t\t\t\t"; std::cin >> contra;
+	std::cout << "Ingrese el Usuario: "; std::cin >> usuario;
+	std::cout << "Ingrese la contraseña: "; std::cin >> contra;
 	std::ifstream read(usuario + ".txt");
 	std::getline(read, user);
 	std::getline(read, pass);
@@ -76,20 +56,20 @@ bool loggeado()
 		return false;
 	}
 }
+
 bool SOS()
 {
 	int cont = 0;
 	int opt;
-	
-	loop: std::cout << "\n\n\n\t\t\t\t\t\t1.Registrarse\n\t\t\t\t\t\t2.Iniciar Sesion\n\t\t\t\t\t\t3.Salir\n\t\t\t\t\t\tEleccion : "; std::cin >> opt;
+
+loop: std::cout << "1.Registrarse\n2.Iniciar Sesion\n3.Salir\nEleccion : "; std::cin >> opt;
 	if (opt == 1)
 	{
 		system("cls");
-		fileexp();
-		std::cout << "\n\n\n\t\t\t\t\t\tRegistrase\n";
+		std::cout << "\tRegistrase\n";
 		std::string usuario, contra;
-		std::cout << "\t\t\t\t\tIngrese su  nombre de usuario: \n\t\t\t\t\t"; std::cin >> usuario;
-		std::cout << "\t\t\t\t\tIngrese su  contraseña: \n\t\t\t\t\t"; std::cin >> contra;
+		std::cout << "Ingrese su  nombre de usuario: "; std::cin >> usuario;
+		std::cout << "Ingrese su  contraseña: "; std::cin >> contra;
 
 		std::ofstream file;
 		file.open(usuario + ".txt");
@@ -103,20 +83,18 @@ bool SOS()
 		do
 		{
 			system("cls");
-			fileexp();
-			std::cout << "\n\n\n\t\t\t\t\t\tIniciar Sesion\n";
+			std::cout << "\tIniciar Sesion\n";
 			bool ingreso = loggeado();
 			if (!ingreso)
 			{
-				std::cout << "\t\t\t\t\t\tUsuario y/o contraseña incorrectos." << std::endl;
-				std::cout << "\t\t\t\t\t\tUsted tiene " << 2 - cont << " intentos mas." << std::endl;
+				std::cout << "Usuario y/o contraseña incorrectos." << std::endl;
+				std::cout << "Usted tiene " << 2 - cont << " intentos mas." << std::endl;
 				cont++;
 				system("pause>0");
 			}
 			else
 			{
-				std::cout << "\t\t\t\t\t\tBienvenido." << std::endl;
-				system("pause>0");
+				std::cout << "Bienvenido." << std::endl;
 				return 1;
 			}
 		} while (cont < 3);
@@ -154,35 +132,28 @@ int empiezacon(vector<string> Nombre, char a)
 	}
 }
 
-int terminacon(vector<string> Nombre, char a)
-{
-	for (int i = 0; i < Nombre.size(); i++)
-	{
-		string compare = Nombre[i];
-		if (compare[compare.size()-1] == a)
-		{
-			return i;
-		}
-	}
-}
-
 
 void main() {
 
 	Console::SetWindowSize(115, 28);
-	if (SOS())
+	if (1)
 	{
 		system("cls");
 		menu();
 		system("pause>0");
 		system("cls");
 		vector<fs::directory_entry> vec;
+		vector<string> filename;
+		vector<string> extension;
+		vector<int> size;
 		vector<string> _nombre;
 		vector<int> _codigo;
 		vector<int> _stock;
 		vector<int> _produccion;
 		vector<int> _vencimiento;
-		fs::path RUTA{ "archivos" };
+		string _archivo;
+		cout << "	Ingrese el nombre del archivo que quiere explorar: "; cin >> _archivo; cout << endl;
+		fs::path RUTA{ _archivo };
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
@@ -201,7 +172,12 @@ void main() {
 				}
 				Name += aPath.filename().string()[i];
 			}
+
+			filename.push_back(Name);
+			extension.push_back(aPath.extension().string());
+			size.push_back(fs::file_size(vec[i]));
 			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
+
 		}
 
 		for (int i = 0; i < vec.size(); i++)
@@ -253,7 +229,7 @@ void main() {
 		cout << "Ingrese el nombre de la caracteristica para indexar : "; cin >> _eleccion;
 		if (_eleccion == "Codigo")
 		{
-			index_c(_nombre, _codigo);		
+			index_c(_nombre, _codigo);
 		}
 		if (_eleccion == "Stock")
 		{
@@ -271,8 +247,8 @@ void main() {
 		char t;
 		cin >> t;
 		cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
-	
-	}	
+
+	}
 	cin.ignore();
 	system("pause>0");
 }
