@@ -120,16 +120,60 @@ void index_c(vector<string> Nombre, vector<int> Eleccion)
 	}
 }
 
-int empiezacon(vector<string> Nombre, char a)
+vector<int> empiezacon(vector<string> Nombre, char a)
 {
+	vector<int> pos;
 	for (int i = 0; i < Nombre.size(); i++)
 	{
 		string compare = Nombre[i];
 		if (compare[0] == a)
 		{
-			return i;
+			pos.push_back(i);
 		}
 	}
+	return pos;
+}
+
+vector<int> contiene(vector<string> Nombre, char a)
+{
+	vector<int> pos;
+	for (int i = 0; i < Nombre.size(); i++)
+	{
+		string compare = Nombre[i];
+		for (int j = 1; j < Nombre[i].size()-1; j++)
+		{
+			
+			if (compare[j] == a)
+			{
+				pos.push_back(i);
+			}
+		}
+		
+	}
+	return pos;
+}
+
+vector<int> terminacon(vector<string> Nombre, char a)
+{
+	vector<int> pos;
+	for (int i = 0; i < Nombre.size(); i++)
+	{
+		string compare = Nombre[i];
+		if (compare[Nombre[i].size()-1] == a)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
+void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size)
+{
+	for (int i = 0; i < pos.size(); ++i)
+	{
+		cout << filename[pos[i]] << "\t" << extension[pos[i]] << "\t" << size[pos[i]] << endl;
+	}
+
 }
 
 
@@ -246,8 +290,10 @@ void main() {
 		cout << "ingrese tecla :";
 		char t;
 		cin >> t;
-		cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
-
+		//cout << filename[empiezacon(filename, t)] << "\t" << extension[empiezacon(filename, t)] << "\t" << size[empiezacon(filename, t)] << endl;
+		//cout << filename[terminacon(filename, t)] << "\t" << extension[terminacon(filename, t)] << "\t" << size[terminacon(filename, t)] << endl;
+		//cout << filename[contiene(filename, t)] << "\t" << extension[contiene(filename, t)] << "\t" << size[contiene(filename, t)] << endl;
+		mostrar(empiezacon(filename, t), filename, extension, size);
 	}
 	cin.ignore();
 	system("pause>0");
