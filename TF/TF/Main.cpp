@@ -297,9 +297,15 @@ void main() {
 			vec.push_back(p);
 			auto ftime = fs::last_write_time(p);
 			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-			auto f = (asctime(localtime(&cftime)));
-			cout << f << endl;
+			char* f = new char();
+			f = (asctime(localtime(&cftime)));
+			fecha.push_back(f);
 		}
+		for (int i = 0; i < fecha.size(); i++)
+		{
+			std::cout << fecha[i] << endl;
+		}
+
 		cin.ignore();
 		std::cin.get();
 
