@@ -4,7 +4,8 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
-
+#include <chrono>
+#include <iomanip>
 using namespace System;
 namespace fs = experimental::filesystem;
 
@@ -212,12 +213,22 @@ vector<int> IgualA(vector<int> size, int a)
 	return pos;
 }
 
-void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size)
+void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
 {
-	cout << "Nombre\t\tExtension\tTamaño" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
 	for (int i = 0; i < pos.size(); ++i)
 	{
-		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << endl;
+		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t" << fecha[pos[i]] << endl;
+	}
+
+}
+
+void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
+{
+	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
+	for (int i = 0; i < filename.size(); ++i)
+	{
+		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t" << fecha[i] << endl;
 	}
 
 }
@@ -270,11 +281,14 @@ void main() {
 		vector<string> filename;
 		vector<string> extension;
 		vector<int> size;
+		vector<char*> fecha;
+
 		vector<string> _nombre;
 		vector<int> _codigo;
 		vector<int> _stock;
 		vector<int> _produccion;
 		vector<int> _vencimiento;
+
 		string _archivo;
 		cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 		fs::path RUTA{ _archivo };
@@ -282,6 +296,7 @@ void main() {
 		{
 			vec.push_back(p);
 		}
+
 		for (int i = 0; i < vec.size(); i++)
 		{
 			fs::path aPath = vec[i];
@@ -294,7 +309,9 @@ void main() {
 				}
 				Name += aPath.filename().string()[i];
 			}
-
+			auto ftime = fs::last_write_time(vec[i]);
+			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+			fecha.push_back((asctime(localtime(&cftime))));
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
@@ -352,11 +369,7 @@ void main() {
 			case 1:
 			{
 				system("cls");
-				cout << "Nombre\tExtension\tSize" << endl;
-				for (int i = 0; i < vec.size(); i++)
-				{
-					cout << filename[i] << "\t" << extension[i] << "\t\t" << size[i] << "B" << endl;
-				}
+				mostrarDef(filename, extension, size, fecha);
 				break;
 			}
 			case 2:
@@ -397,11 +410,8 @@ void main() {
 				int desc_3;
 				char tecla_3;
 				int num_3;
-				cout << "Nombre\tExtension\tSize" << endl;
-				for (int i = 0; i < vec.size(); i++)
-				{
-					cout << filename[i] << "\t" << extension[i] << "\t\t" << size[i] << "B" << endl;
-				}
+				mostrarDef(filename, extension, size, fecha);
+				
 				cout << "Ingrese el nombre de la columna que desea filtrar(Nombre o Size) : "; cin >> opt_3;
 				if (opt_3 == "Nombre")
 				{
@@ -416,17 +426,17 @@ void main() {
 					if (desc_3 == 1)
 					{
 						cout << "Ingrese la letra con la que inicia : "; cin >> tecla_3;
-						mostrar(empiezacon(filename, tecla_3), filename, extension, size);
+						mostrar(empiezacon(filename, tecla_3), filename, extension, size, fecha);
 					}
 					else if (desc_3 == 2)
 					{
 						cout << "Ingrese la letra con la que finaliza : "; cin >> tecla_3;
-						mostrar(terminacon(filename, tecla_3), filename, extension, size);
+						mostrar(terminacon(filename, tecla_3), filename, extension, size, fecha);
 					}
 					else if (desc_3 == 3)
 					{
 						cout << "Ingrese la letra que contiene : "; cin >> tecla_3;
-						mostrar(contiene(filename, tecla_3), filename, extension, size);
+						mostrar(contiene(filename, tecla_3), filename, extension, size, fecha);
 					}	
 					break;
 				}
@@ -443,17 +453,17 @@ void main() {
 					if (desc_3 == 1)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(MayorA(size, num_3), filename, extension, size);
+						mostrar(MayorA(size, num_3), filename, extension, size, fecha);
 					}
 					else if (desc_3 == 2)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(MenorA(size, num_3), filename, extension, size);
+						mostrar(MenorA(size, num_3), filename, extension, size, fecha);
 					}
 					else if (desc_3 == 3)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(IgualA(size, num_3), filename, extension, size);
+						mostrar(IgualA(size, num_3), filename, extension, size, fecha);
 					}
 
 					break;
@@ -475,11 +485,11 @@ void main() {
 					} while (gaa > 2 || gaa < 1);
 					if (gaa = 1)
 					{
-						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size);
+						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size, fecha);
 					}
 					else if (gaa = 2)
 					{
-						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size);
+						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size, fecha);
 					}
 				}
 				else if (another == "Size")
@@ -493,15 +503,17 @@ void main() {
 					} while (gaa > 2 || gaa < 1);
 					if (gaa = 1)
 					{
-						mostrar(ordenar_MenToMay<int>(size), filename, extension, size);
+						mostrar(ordenar_MenToMay<int>(size), filename, extension, size, fecha);
 					}
 					else if (gaa = 2)
 					{
-						mostrar(ordenar_MayToMen<int>(size), filename, extension, size);
+						mostrar(ordenar_MayToMen<int>(size), filename, extension, size, fecha);
 					}
 				}
 				break;
 			}
+			case 0: exit(1); break;
+
 			}
 			system("pause>0");
 		}		
