@@ -218,22 +218,24 @@ vector<int> IgualA(vector<int> size, int a)
 
 void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
 {
-	cout << "Nombre\t\tExtension\tTamaño\t\t\tFecha\t\t\tFechaCREACION" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\t\t\tFecha\t\t\t\t\tFechaCREACION" << endl;
 	for (int i = 0; i < pos.size(); ++i)
 	{
 		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t\t" << fecha[pos[i]] << "\t\t\t" << fechaCREACION[pos[i]] << endl;
 	}
-
+	cin.ignore();
+	cin.get();
 }
 
 void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
 {
-	cout << "Nombre\t\tExtension\tTamaño\t\t\tFecha\t\t\tFechaCREACION" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\t\t\t\tFecha\t\t\t\t\tFechaCREACION" << endl;
 	for (int i = 0; i < filename.size(); ++i)
 	{
 		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t\t" << fecha[i] << "\t\t\t" << fechaCREACION[i] << endl;
 	}
-
+	cin.ignore();
+	cin.get();
 }
 
 template <typename T>
