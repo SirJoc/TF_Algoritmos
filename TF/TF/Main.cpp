@@ -287,7 +287,8 @@ void main() {
 		vector<int> size;
 		vector<string> fecha;
 		vector<string> fechaCREACION;
-
+		vector<string> VecDireccion;
+		string lineaZZ;
 		vector<string> _nombre;
 		vector<int> _codigo;
 		vector<int> _stock;
@@ -299,32 +300,49 @@ void main() {
 		fs::path RUTA{ _archivo };
 		ofstream archivoText("Fechas.txt");
 		ofstream archivoFC("FechasDeCreacion.txt");
-
-		if (archivoText.fail() || archivoFC.fail())
+		ofstream DireccionM("Direccion.txt");
+		if (archivoText.fail() || archivoFC.fail()|| DireccionM.fail())
 			exit(1);
 
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
-			fs::path xPath = p;
-			stat(("C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\" + xPath.filename().string()).c_str(), &t_stat);
-			struct tm * timeinfo = localtime(&t_stat.st_ctime);
+			DireccionM << p << endl;
 
 			auto ftime = fs::last_write_time(p);
 			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-
-			archivoFC << asctime(timeinfo);
 			archivoText << (std::asctime(std::localtime(&cftime)));
 		}
 
+		ifstream archivoOpenDir("AUXILIAR.txt");
+		if (archivoOpenDir.fail())
+			exit(1);
+		
+
+		while (!archivoOpenDir.eof())
+		{
+			getline(archivoOpenDir, lineaZZ);
+			VecDireccion.push_back(lineaZZ);
+		}
+		
+
+		for (int i = 0; i < VecDireccion.size(); ++i)
+		{
+			cout << VecDireccion[i] << endl;
+			stat((VecDireccion[i]).c_str(), &t_stat);
+			struct tm * timeinfo = localtime(&t_stat.st_ctime);
+			archivoFC << (asctime(timeinfo));
+			cout << (asctime(timeinfo));
+		}
 		archivoText.close();
+		DireccionM.close();
+		archivoOpenDir.close();
 		archivoFC.close();
 
 
 		ifstream archivoOpenRead("Fechas.txt");
 		if (archivoOpenRead.fail())
 			exit(1);
-		string lineaZZ;
 
 
 		while (!archivoOpenRead.eof())
@@ -332,7 +350,9 @@ void main() {
 			getline(archivoOpenRead, lineaZZ);
 			fecha.push_back(lineaZZ);
 		}
-		
+		archivoOpenRead.close();
+
+
 		ifstream archivoOpenc("FechasDeCreacion.txt");
 		if (archivoOpenc.fail())
 			exit(1);
@@ -343,7 +363,7 @@ void main() {
 			fechaCREACION.push_back(lineaZZ);
 		}
 		archivoOpenc.close();
-
+		
 
 
 		for (int i = 0; i < fecha.size(); ++i)
