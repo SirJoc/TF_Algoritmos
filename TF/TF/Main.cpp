@@ -6,9 +6,12 @@
 #include <filesystem>
 #include <chrono>
 #include <iomanip>
+#include <sys/stat.h>
+#include <time.h>
+#include <stdio.h>
 using namespace System;
 namespace fs = experimental::filesystem;
-
+using namespace std::chrono_literals;
 
 void fileexp()
 {
@@ -213,22 +216,22 @@ vector<int> IgualA(vector<int> size, int a)
 	return pos;
 }
 
-void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
+void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
 {
-	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\t\tFecha\t\t\tFechaCREACION" << endl;
 	for (int i = 0; i < pos.size(); ++i)
 	{
-		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t" << fecha[pos[i]] << endl;
+		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t\t" << fecha[pos[i]] << "\t\t\t" << fechaCREACION[pos[i]] << endl;
 	}
 
 }
 
-void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
+void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
 {
-	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\t\tFecha\t\t\tFechaCREACION" << endl;
 	for (int i = 0; i < filename.size(); ++i)
 	{
-		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t" << fecha[i] << endl;
+		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t\t" << fecha[i] << "\t\t\t" << fechaCREACION[i] << endl;
 	}
 
 }
@@ -274,6 +277,7 @@ vector<int> ordenar_MayToMen(vector<T>& filename)
 void main() {
 
 	Console::SetWindowSize(115, 45);
+	struct stat t_stat;
 	if (1)
 	{
 		fileexp();
@@ -281,8 +285,10 @@ void main() {
 		vector<string> filename;
 		vector<string> extension;
 		vector<int> size;
-		vector<char*> fecha;
-
+		vector<string> fecha;
+		vector<string> fechaCREACION;
+		vector<string> VecDireccion;
+		string lineaZZ;
 		vector<string> _nombre;
 		vector<int> _codigo;
 		vector<int> _stock;
@@ -292,10 +298,81 @@ void main() {
 		string _archivo;
 		cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 		fs::path RUTA{ _archivo };
+		ofstream archivoText("Fechas.txt");
+		ofstream archivoFC("FechasDeCreacion.txt");
+		ofstream DireccionM("Direccion.txt");
+		if (archivoText.fail() || archivoFC.fail()|| DireccionM.fail())
+			exit(1);
+
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
+			DireccionM << p << endl;
+
+			auto ftime = fs::last_write_time(p);
+			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+			archivoText << (std::asctime(std::localtime(&cftime)));
 		}
+
+		ifstream archivoOpenDir("AUXILIAR.txt");
+		if (archivoOpenDir.fail())
+			exit(1);
+		
+
+		while (!archivoOpenDir.eof())
+		{
+			getline(archivoOpenDir, lineaZZ);
+			VecDireccion.push_back(lineaZZ);
+		}
+		
+
+		for (int i = 0; i < VecDireccion.size(); ++i)
+		{
+			cout << VecDireccion[i] << endl;
+			stat((VecDireccion[i]).c_str(), &t_stat);
+			struct tm * timeinfo = localtime(&t_stat.st_ctime);
+			archivoFC << (asctime(timeinfo));
+			cout << (asctime(timeinfo));
+		}
+		archivoText.close();
+		DireccionM.close();
+		archivoOpenDir.close();
+		archivoFC.close();
+
+
+		ifstream archivoOpenRead("Fechas.txt");
+		if (archivoOpenRead.fail())
+			exit(1);
+
+
+		while (!archivoOpenRead.eof())
+		{
+			getline(archivoOpenRead, lineaZZ);
+			fecha.push_back(lineaZZ);
+		}
+		archivoOpenRead.close();
+
+
+		ifstream archivoOpenc("FechasDeCreacion.txt");
+		if (archivoOpenc.fail())
+			exit(1);
+
+		while (!archivoOpenc.eof())
+		{
+			getline(archivoOpenc, lineaZZ);
+			fechaCREACION.push_back(lineaZZ);
+		}
+		archivoOpenc.close();
+		
+
+
+		for (int i = 0; i < fecha.size(); ++i)
+			std::cout << fecha[i] << endl;
+
+
+
+		cin.ignore();
+		std::cin.get();
 
 		for (int i = 0; i < vec.size(); i++)
 		{
@@ -307,11 +384,10 @@ void main() {
 				{
 					break;
 				}
+				
 				Name += aPath.filename().string()[i];
 			}
-			auto ftime = fs::last_write_time(vec[i]);
-			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-			fecha.push_back((asctime(localtime(&cftime))));
+			
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
@@ -371,12 +447,12 @@ void main() {
 			case 1:
 			{
 				system("cls");
-				mostrarDef(filename, extension, size, fecha);
+				mostrarDef(filename, extension, size, fecha, fechaCREACION);
 				break;
 			}
 			case 2:
 			{
-				//falta
+				//falta, no me digas :v que yo estuve presionando y no paso nada ;:v
 				break;
 			}
 			case 3:
@@ -412,7 +488,7 @@ void main() {
 				int desc_3;
 				char tecla_3;
 				int num_3;
-				mostrarDef(filename, extension, size, fecha);
+				mostrarDef(filename, extension, size, fecha, fechaCREACION);
 				
 				cout << "Ingrese el nombre de la columna que desea filtrar(Nombre o Size) : "; cin >> opt_3;
 				if (opt_3 == "Nombre")
@@ -428,17 +504,17 @@ void main() {
 					if (desc_3 == 1)
 					{
 						cout << "Ingrese la letra con la que inicia : "; cin >> tecla_3;
-						mostrar(empiezacon(filename, tecla_3), filename, extension, size, fecha);
+						mostrar(empiezacon(filename, tecla_3), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (desc_3 == 2)
 					{
 						cout << "Ingrese la letra con la que finaliza : "; cin >> tecla_3;
-						mostrar(terminacon(filename, tecla_3), filename, extension, size, fecha);
+						mostrar(terminacon(filename, tecla_3), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (desc_3 == 3)
 					{
 						cout << "Ingrese la letra que contiene : "; cin >> tecla_3;
-						mostrar(contiene(filename, tecla_3), filename, extension, size, fecha);
+						mostrar(contiene(filename, tecla_3), filename, extension, size, fecha, fechaCREACION);
 					}	
 					break;
 				}
@@ -455,17 +531,17 @@ void main() {
 					if (desc_3 == 1)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(MayorA(size, num_3), filename, extension, size, fecha);
+						mostrar(MayorA(size, num_3), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (desc_3 == 2)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(MenorA(size, num_3), filename, extension, size, fecha);
+						mostrar(MenorA(size, num_3), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (desc_3 == 3)
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
-						mostrar(IgualA(size, num_3), filename, extension, size, fecha);
+						mostrar(IgualA(size, num_3), filename, extension, size, fecha, fechaCREACION);
 					}
 
 					break;
@@ -487,11 +563,11 @@ void main() {
 					} while (gaa > 2 || gaa < 1);
 					if (gaa = 1)
 					{
-						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size, fecha);
+						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (gaa = 2)
 					{
-						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size, fecha);
+						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size, fecha, fechaCREACION);
 					}
 				}
 				else if (another == "Size")
@@ -505,11 +581,11 @@ void main() {
 					} while (gaa > 2 || gaa < 1);
 					if (gaa = 1)
 					{
-						mostrar(ordenar_MenToMay<int>(size), filename, extension, size, fecha);
+						mostrar(ordenar_MenToMay<int>(size), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (gaa = 2)
 					{
-						mostrar(ordenar_MayToMen<int>(size), filename, extension, size, fecha);
+						mostrar(ordenar_MayToMen<int>(size), filename, extension, size, fecha, fechaCREACION);
 					}
 				}
 				break;

@@ -1,0 +1,6 @@
+archivos\cuno.txt
+archivos\dos.txt
+archivos\nmmswey.csv
+archivos\perro.txt
+archivos\RecienNacido.txt
+archivos\tres.txt
