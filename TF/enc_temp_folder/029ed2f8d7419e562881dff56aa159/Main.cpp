@@ -338,6 +338,18 @@ void main() {
 			archivoText << (std::asctime(std::localtime(&cftime)));
 		}
 
+		/*ifstream archivoOpenDir("AUXILIAR.txt");
+		if (archivoOpenDir.fail())
+			exit(1);
+		
+
+		while (!archivoOpenDir.eof())
+		{
+			getline(archivoOpenDir, lineaZZ);
+			VecDireccion.push_back(lineaZZ);
+		}*/
+		
+
 		for (int i = 0; i < VecDireccion.size(); ++i)
 		{
 			cout << VecDireccion[i] << endl;

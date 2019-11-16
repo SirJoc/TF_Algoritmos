@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
 using namespace std;
 using namespace System;
 namespace fs = experimental::filesystem;
@@ -22,11 +23,48 @@ int main()
 	cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 	fs::path RUTA{ _archivo };
 	vector<fs::directory_entry> vec;
-
+	stringstream ss;
+	string linea = "";
+	string aux;
 	for (auto& p : fs::recursive_directory_iterator(RUTA))
 	{
 		vec.push_back(p);
-		cout << p;
+		fs::path xD = fs::current_path();
+		ss << xD;
+		ss << char(92);
+		ss << p;
+		ss >> linea;
+		cout << "\n";
+		
+		for (int i = 0; i < linea.size(); ++i)
+		{
+			
+			aux.push_back(linea[i]);
+			if(linea[i] == char(92))
+			{
+				aux.push_back(char(92));
+			}
+		}
+		cout << aux;
+		aux.clear();
+		ss.clear();
+		linea.clear();
+		for (int k = 0; k < 5; k++)
+		{
+			auto ftime = fs::last_write_time(p);
+			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+			cout << endl;
+			ss << (std::asctime(std::localtime(&cftime)));
+		}
+		
+
+		ss >> linea;
+		cout << linea << endl;
+		ss.clear();
+		linea.clear();
+
+		//////////////
+		
 	}
 	
 	
