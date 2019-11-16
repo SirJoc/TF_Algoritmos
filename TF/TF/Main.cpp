@@ -318,7 +318,11 @@ void main() {
 			
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
+			auto ftime = fs::last_write_time(vec[i]);
+			std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime); // assuming system_clock
 			size.push_back(fs::file_size(vec[i]));
+			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
+
 		}
 
 		for (int i = 0; i < vec.size(); i++)
