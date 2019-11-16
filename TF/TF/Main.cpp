@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace System;
 namespace fs = experimental::filesystem;
-
+using namespace std::chrono_literals;
 
 void fileexp()
 {
@@ -295,7 +295,13 @@ void main() {
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
+			auto ftime = fs::last_write_time(p);
+			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+			auto f = (asctime(localtime(&cftime)));
+			cout << f << endl;
 		}
+		cin.ignore();
+		std::cin.get();
 
 		for (int i = 0; i < vec.size(); i++)
 		{
@@ -309,9 +315,7 @@ void main() {
 				}
 				Name += aPath.filename().string()[i];
 			}
-			auto ftime = fs::last_write_time(vec[i]);
-			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-			fecha.push_back((asctime(localtime(&cftime))));
+			
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
