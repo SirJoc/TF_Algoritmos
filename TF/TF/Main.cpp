@@ -390,7 +390,6 @@ void main() {
 			
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
-			// assuming system_clock
 			size.push_back(fs::file_size(vec[i]));
 			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 
@@ -453,7 +452,7 @@ void main() {
 			}
 			case 2:
 			{
-				//falta
+				//falta, no me digas :v que yo estuve presionando y no paso nada ;:v
 				break;
 			}
 			case 3:
