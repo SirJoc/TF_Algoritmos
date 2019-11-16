@@ -6,6 +6,9 @@
 #include <filesystem>
 #include <chrono>
 #include <iomanip>
+#include <sys/stat.h>
+#include <time.h>
+#include <stdio.h>
 using namespace System;
 namespace fs = experimental::filesystem;
 using namespace std::chrono_literals;
@@ -274,6 +277,7 @@ vector<int> ordenar_MayToMen(vector<T>& filename)
 void main() {
 
 	Console::SetWindowSize(115, 45);
+	struct stat t_stat;
 	if (1)
 	{
 		fileexp();
@@ -293,30 +297,52 @@ void main() {
 		cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 		fs::path RUTA{ _archivo };
 		ofstream archivoText("Fechas.txt");
-		if (archivoText.fail())
+		ofstream archivoFC("FechasDeCreacion.txt");
+		if (archivoText.fail() || archivoFC.fail())
 			exit(1);
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
+			fs::path xPath = p;
+			stat(("C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\" + xPath.filename().string()).c_str(), &t_stat);
+			struct tm * timeinfo = localtime(&t_stat.st_ctime);
+
 			auto ftime = fs::last_write_time(p);
 			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+
+			archivoFC << asctime(timeinfo);
 			archivoText << (std::asctime(std::localtime(&cftime)));
 		}
+
 		archivoText.close();
+		archivoFC.close();
+
+
+		cin.ignore();
+		std::cin.get();
+
 
 		ifstream archivoOpenRead("Fechas.txt");
 		if (archivoOpenRead.fail())
 			exit(1);
 		string lineaZZ;
+
+
 		while (!archivoOpenRead.eof())
 		{
 			getline(archivoOpenRead, lineaZZ);
 			fecha.push_back(lineaZZ);
 		}
+
+
 		archivoOpenRead.close();
+
+
 
 		for (int i = 0; i < fecha.size(); ++i)
 			std::cout << fecha[i] << endl;
+
+
 
 		cin.ignore();
 		std::cin.get();
@@ -331,13 +357,13 @@ void main() {
 				{
 					break;
 				}
+				
 				Name += aPath.filename().string()[i];
 			}
 			
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
-			auto ftime = fs::last_write_time(vec[i]);
-			std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime); // assuming system_clock
+			// assuming system_clock
 			size.push_back(fs::file_size(vec[i]));
 			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 
