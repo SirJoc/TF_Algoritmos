@@ -213,9 +213,9 @@ vector<int> IgualA(vector<int> size, int a)
 	return pos;
 }
 
-void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
+void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha)
 {
-	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\tFecha" << endl;
 	for (int i = 0; i < pos.size(); ++i)
 	{
 		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t" << fecha[pos[i]] << endl;
@@ -223,9 +223,9 @@ void mostrar(vector<int> pos, vector<string> filename, vector<string> extension,
 
 }
 
-void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<char*> fecha)
+void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha)
 {
-	cout << "Nombre\t\tExtension\tTamaño\tFecha" << endl;
+	cout << "Nombre\t\tExtension\tTamaño\t\tFecha" << endl;
 	for (int i = 0; i < filename.size(); ++i)
 	{
 		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t" << fecha[i] << endl;
@@ -281,7 +281,7 @@ void main() {
 		vector<string> filename;
 		vector<string> extension;
 		vector<int> size;
-		vector<char*> fecha;
+		vector<string> fecha;
 
 		vector<string> _nombre;
 		vector<int> _codigo;
@@ -292,19 +292,31 @@ void main() {
 		string _archivo;
 		cout << "\n\n\t\t\t\tIngrese el nombre de la carpeta que quiere explorar: \n\t\t\t\t\t"; cin >> _archivo; cout << endl;
 		fs::path RUTA{ _archivo };
+		ofstream archivoText("Fechas.txt");
+		if (archivoText.fail())
+			exit(1);
 		for (auto& p : fs::recursive_directory_iterator(RUTA))
 		{
 			vec.push_back(p);
 			auto ftime = fs::last_write_time(p);
 			time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-			char* f = new char();
-			f = (asctime(localtime(&cftime)));
-			fecha.push_back(f);
+			archivoText << (std::asctime(std::localtime(&cftime)));
 		}
-		for (int i = 0; i < fecha.size(); i++)
+		archivoText.close();
+
+		ifstream archivoOpenRead("Fechas.txt");
+		if (archivoOpenRead.fail())
+			exit(1);
+		string lineaZZ;
+		while (!archivoOpenRead.eof())
 		{
-			std::cout << fecha[i] << endl;
+			getline(archivoOpenRead, lineaZZ);
+			fecha.push_back(lineaZZ);
 		}
+		archivoOpenRead.close();
+
+		for (int i = 0; i < fecha.size(); ++i)
+			std::cout << fecha[i] << endl;
 
 		cin.ignore();
 		std::cin.get();
