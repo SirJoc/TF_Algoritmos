@@ -324,6 +324,7 @@ void main() {
 	struct stat t_stat;
 	if (SOS())
 	{
+		system("pause>0");
 		fileexp();
 		vector<fs::directory_entry> vec;
 		vector<string> filename;
@@ -427,8 +428,6 @@ void main() {
 
 
 
-		cin.ignore();
-		std::cin.get();
 
 		for (int i = 0; i < vec.size(); i++)
 		{
