@@ -223,8 +223,6 @@ void mostrar(vector<int> pos, vector<string> filename, vector<string> extension,
 	{
 		cout << filename[pos[i]] << "\t\t" << extension[pos[i]] << "\t\t" << size[pos[i]] << "\t\t\t" << fecha[pos[i]] << "\t\t\t" << fechaCREACION[pos[i]] << endl;
 	}
-	cin.ignore();
-	cin.get();
 }
 
 void mostrarDef(vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
@@ -234,8 +232,6 @@ void mostrarDef(vector<string> filename, vector<string> extension, vector<int> s
 	{
 		cout << filename[i] << "\t\t" << extension[i] << "\t\t" << size[i] << "\t\t\t" << fecha[i] << "\t\t\t" << fechaCREACION[i] << endl;
 	}
-	cin.ignore();
-	cin.get();
 }
 
 template <typename T>
@@ -278,19 +274,53 @@ vector<int> ordenar_MayToMen(vector<T>& filename)
 
 int Buscar_filename(vector<string> filename, string elem)
 {
-	string aux = elem + ".txt";
 	for (int i = 0; i < filename.size(); i++)
 	{
-		if (filename[i] == aux)
+		if (filename[i] == elem)
 		{
 			return i;
 		}
 	}
 }
 
+
+vector<int> Buscar_size(vector<int> size, int elem)
+{
+	vector<int> pos;
+	for (int i = 0; i < size.size(); i++)
+	{
+		if (size[i] == elem)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
+vector<int> Buscar_extension(vector<string> extension, string elem)
+{
+	vector<int> pos;
+	for (int i = 0; i < extension.size(); i++)
+	{
+		if (extension[i] == elem)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
+}
+
+void mostrar_buscar(vector<int> pos, vector<string> vecDirectory)
+{
+	for (int i = 0; i < pos.size(); i++)
+	{
+		cout << vecDirectory[pos[i]] << endl;
+	}
+}
+
 void main() {
 
-	Console::SetWindowSize(115, 45);
+	Console::SetWindowSize(120, 45);
 	struct stat t_stat;
 	if (1)
 	{
@@ -354,11 +384,11 @@ void main() {
 
 		for (int i = 0; i < VecDireccion.size(); ++i)
 		{
-			cout << VecDireccion[i] << endl;
+			//cout << VecDireccion[i] << endl;
 			stat((VecDireccion[i]).c_str(), &t_stat);
 			struct tm * timeinfo = localtime(&t_stat.st_ctime);
 			archivoFC << (asctime(timeinfo));
-			cout << (asctime(timeinfo));
+			//cout << (asctime(timeinfo));
 		}
 		archivoText.close();
 		
@@ -393,7 +423,7 @@ void main() {
 
 
 		for (int i = 0; i < fecha.size(); ++i)
-			std::cout << fecha[i] << endl;
+			//std::cout << fecha[i] << endl;
 
 
 
@@ -417,7 +447,7 @@ void main() {
 			filename.push_back(Name);
 			extension.push_back(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
-			cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
+			//cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 
 		}
 
@@ -459,7 +489,7 @@ void main() {
 			f.close();
 		}
 		int opt_menu;
-		while (!!!!!!!!!!!!!!!!!!1)
+		while (SOS())
 		{
 			do
 			{
@@ -478,9 +508,43 @@ void main() {
 			}
 			case 2:
 			{
-				string tecla_dir;
-				cout << "Ingrese el nombre del archivo : "; cin >> tecla_dir;
-				cout << vec[Buscar_filename(filename, tecla_dir)].path().string();
+				int plplpl;
+				do {
+					cout << "\n1.Buscar por nombre: ";
+					cout << "\n2.Buscar por extension: ";
+					cout << "\n3.Buscar por size: ";
+					cout << "\nEleccion : ";
+					cin >> plplpl;
+				} while (plplpl > 3 || plplpl < 1);
+				switch (plplpl)
+				{
+				case 1:
+				{
+					string tecla_dir;
+					cout << "\tIngrese el parametro : ";
+					cin >> tecla_dir;
+					cout << "RUTA : " << VecDireccion[Buscar_filename(filename, tecla_dir)];
+					break;
+				}
+				case 2:
+				{
+					string tecla_ext;
+					cout << "\tIngrese el parametro : ";
+					cin >> tecla_ext;
+					cout << "RUTA : ";
+					mostrar_buscar(Buscar_extension(extension, tecla_ext), VecDireccion);
+					break;
+				}
+				case 3:
+				{
+					int tecla_size;
+					cout << "\tIngrese el parametro : ";
+					cin >> tecla_size;
+					cout << "RUTA : ";
+					mostrar_buscar(Buscar_size(size, tecla_size), VecDireccion);
+					break;
+				}
+				}
 				break;
 			}
 			case 3:
@@ -574,6 +638,7 @@ void main() {
 
 					break;
 				}			
+				break;
 			}
 			case 5:
 			{
@@ -589,11 +654,11 @@ void main() {
 						cout << "\nEleccion :";
 						cin >> gaa;
 					} while (gaa > 2 || gaa < 1);
-					if (gaa = 1)
+					if (gaa == 1)
 					{
 						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size, fecha, fechaCREACION);
 					}
-					else if (gaa = 2)
+					else if (gaa == 2)
 					{
 						mostrar(ordenar_MayToMen<string>(filename), filename, extension, size, fecha, fechaCREACION);
 					}
@@ -607,11 +672,11 @@ void main() {
 						cout << "\nEleccion :";
 						cin >> gaa;
 					} while (gaa > 2 || gaa < 1);
-					if (gaa = 1)
+					if (gaa == 1)
 					{
 						mostrar(ordenar_MenToMay<int>(size), filename, extension, size, fecha, fechaCREACION);
 					}
-					else if (gaa = 2)
+					else if (gaa == 2)
 					{
 						mostrar(ordenar_MayToMen<int>(size), filename, extension, size, fecha, fechaCREACION);
 					}
