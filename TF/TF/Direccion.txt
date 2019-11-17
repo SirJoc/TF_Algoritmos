@@ -1,6 +1,6 @@
-archivos\cuno.txt
-archivos\dos.txt
-archivos\nmmswey.csv
-archivos\perro.txt
-archivos\RecienNacido.txt
-archivos\tres.txt
+archivos2\cuna.txt
+archivos2\das.txt
+archivos2\nmmsway.csv
+archivos2\okiBB.txt
+archivos2\parro.txt
+archivos2\RecienNacida.txt

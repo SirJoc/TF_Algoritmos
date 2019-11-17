@@ -276,6 +276,18 @@ vector<int> ordenar_MayToMen(vector<T>& filename)
 	return pos;
 }
 
+int Buscar_filename(vector<string> filename, string elem)
+{
+	string aux = elem + ".txt";
+	for (int i = 0; i < filename.size(); i++)
+	{
+		if (filename[i] == aux)
+		{
+			return i;
+		}
+	}
+}
+
 void main() {
 
 	Console::SetWindowSize(115, 45);
@@ -466,7 +478,9 @@ void main() {
 			}
 			case 2:
 			{
-				//falta, no me digas :v que yo estuve presionando y no paso nada ;:v
+				string tecla_dir;
+				cout << "Ingrese el nombre del archivo : "; cin >> tecla_dir;
+				cout << vec[Buscar_filename(filename, tecla_dir)].path().string();
 				break;
 			}
 			case 3:
