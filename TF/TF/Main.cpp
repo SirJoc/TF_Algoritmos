@@ -322,7 +322,7 @@ void main() {
 
 	Console::SetWindowSize(120, 45);
 	struct stat t_stat;
-	if (1)
+	if (SOS())
 	{
 		fileexp();
 		vector<fs::directory_entry> vec;
@@ -489,7 +489,7 @@ void main() {
 			f.close();
 		}
 		int opt_menu;
-		while (SOS())
+		while (1)
 		{
 			do
 			{
