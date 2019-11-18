@@ -310,6 +310,18 @@ vector<int> Buscar_extension(vector<string> extension, string elem)
 	return pos;
 }
 
+int Buscar_modificacion(vector<string> fecha, string elem)
+{
+	vector<int> pos;
+	for (int i = 0; i < fecha.size(); i++)
+	{
+		if (fecha[i] == elem)
+		{
+			return i;
+		}
+	}
+}
+
 void mostrar_buscar(vector<int> pos, vector<string> vecDirectory)
 {
 	for (int i = 0; i < pos.size(); i++)
@@ -512,9 +524,10 @@ void main() {
 					cout << "\n1.Buscar por nombre: ";
 					cout << "\n2.Buscar por extension: ";
 					cout << "\n3.Buscar por size: ";
+					cout << "\n4.Buscar por fecha de modificacion: ";
 					cout << "\nEleccion : ";
 					cin >> plplpl;
-				} while (plplpl > 3 || plplpl < 1);
+				} while (plplpl > 4 || plplpl < 1);
 				switch (plplpl)
 				{
 				case 1:
@@ -541,6 +554,15 @@ void main() {
 					cin >> tecla_size;
 					cout << "RUTA : ";
 					mostrar_buscar(Buscar_size(size, tecla_size), VecDireccion);
+					break;
+				}
+				case 4:
+				{
+					string tecla_modifi;
+					cout << "\nIngrese el parametro:\n";
+					getline(cin, tecla_modifi);
+					cout << "RUTA :\n";
+					cout << VecDireccion[Buscar_modificacion(fecha, tecla_modifi)];
 					break;
 				}
 				}
