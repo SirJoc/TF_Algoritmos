@@ -423,7 +423,7 @@ void main() {
 		
 
 
-		for (int i = 0; i < fecha.size(); ++i)
+		//for (int i = 0; i < fecha.size(); ++i)
 			//std::cout << fecha[i] << endl;
 
 
