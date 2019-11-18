@@ -310,16 +310,30 @@ vector<int> Buscar_extension(vector<string> extension, string elem)
 	return pos;
 }
 
-int Buscar_modificacion(vector<string> fecha, string elem)
+vector<int> Buscar_modificacion(vector<string> fecha, string elem)
 {
 	vector<int> pos;
 	for (int i = 0; i < fecha.size(); i++)
 	{
 		if (fecha[i] == elem)
 		{
-			return i;
+			pos.push_back(i);
 		}
 	}
+	return pos;
+}
+
+vector<int> Buscar_creacion(vector<string> creacion, string elem)
+{
+	vector<int> pos;
+	for (int i = 0; i < creacion.size(); i++)
+	{
+		if (creacion[i] == elem)
+		{
+			pos.push_back(i);
+		}
+	}
+	return pos;
 }
 
 void mostrar_buscar(vector<int> pos, vector<string> vecDirectory)
@@ -525,9 +539,10 @@ void main() {
 					cout << "\n2.Buscar por extension: ";
 					cout << "\n3.Buscar por size: ";
 					cout << "\n4.Buscar por fecha de modificacion: ";
+					cout << "\n5.Buscar por fecha de creacion: ";
 					cout << "\nEleccion : ";
 					cin >> plplpl;
-				} while (plplpl > 4 || plplpl < 1);
+				} while (plplpl > 5 || plplpl < 1);
 				switch (plplpl)
 				{
 				case 1:
@@ -560,12 +575,23 @@ void main() {
 				{
 					string tecla_modifi;
 					cout << "\nIngrese el parametro:\n";
+					cin.ignore();
 					getline(cin, tecla_modifi);
 					cout << "RUTA :\n";
-					cout << VecDireccion[Buscar_modificacion(fecha, tecla_modifi)];
+					mostrar_buscar(Buscar_modificacion(fecha, tecla_modifi), VecDireccion);
 					break;
 				}
+				case 5:
+					string tecla_crea;
+					cout << "\nIngrese el parametro:\n";
+					cin.ignore();
+					getline(cin, tecla_crea);
+					cout << "RUTA :\n";
+					mostrar_buscar(Buscar_creacion(fechaCREACION, tecla_crea), VecDireccion);
+					break;
+
 				}
+
 				break;
 			}
 			case 3:
