@@ -216,6 +216,7 @@ vector<int> IgualA(vector<int> size, int a)
 	return pos;
 }
 
+
 void mostrar(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
 {
 	cout << "Nombre\t\tExtension\tTamaño\t\t\t\tFecha\t\t\t\t\tFechaCREACION" << endl;
@@ -344,6 +345,49 @@ void mostrar_buscar(vector<int> pos, vector<string> vecDirectory)
 	}
 }
 
+void mostrarPorFiltroOrdenamiento_MayToMen(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
+{
+	vector<string> Filename;
+	vector<string> Extension;
+	vector<int>    Size;
+	vector<string> Fecha;
+	vector<string> FechaCREACION;
+	vector<string> vecDireccion;
+
+	for (int i = 0; i < pos.size(); ++i)
+	{
+		Filename.push_back(filename[i]);
+		Extension.push_back(extension[i]);
+		Size.push_back(size[i]);
+		Fecha.push_back(fecha[i]);
+		FechaCREACION.push_back(fechaCREACION[i]);
+	}
+
+	mostrar(ordenar_MayToMen(Filename), Filename, Extension, Size, Fecha, FechaCREACION);
+}
+
+void mostrarPorFiltroOrdenamiento_MenToMay(vector<int> pos, vector<string> filename, vector<string> extension, vector<int> size, vector<string> fecha, vector<string> fechaCREACION)
+{
+	vector<string> Filename;
+	vector<string> Extension;
+	vector<int>    Size;
+	vector<string> Fecha;
+	vector<string> FechaCREACION;
+	vector<string> vecDireccion;
+
+	for (int i = 0; i < pos.size(); ++i)
+	{
+		Filename.push_back(filename[i]);
+		Extension.push_back(extension[i]);
+		Size.push_back(size[i]);
+		Fecha.push_back(fecha[i]);
+		FechaCREACION.push_back(fechaCREACION[i]);
+	}
+
+	mostrar(ordenar_MenToMay(Filename), Filename, Extension, Size, Fecha, FechaCREACION);
+}
+
+
 void main() {
 
 	Console::SetWindowSize(120, 45);
@@ -358,6 +402,11 @@ void main() {
 		vector<int> size;
 		vector<string> fecha;
 		vector<string> fechaCREACION;
+		AVLTree<string>* avl_filename;
+		AVLTree<string>* avl_extension;		
+		AVLTree<string>* avl_fecha;
+		AVLTree<string>* avl_fechaCREACION;
+		AVLTree<int>* avl_size;
 		vector<string> VecDireccion;
 		string lineaZZ;
 		vector<string> _nombre;
@@ -432,6 +481,7 @@ void main() {
 		{
 			getline(archivoOpenRead, lineaZZ);
 			fecha.push_back(lineaZZ);
+			avl_fecha->Add(lineaZZ);
 		}
 		archivoOpenRead.close();
 
@@ -444,6 +494,7 @@ void main() {
 		{
 			getline(archivoOpenc, lineaZZ);
 			fechaCREACION.push_back(lineaZZ);
+			avl_fechaCREACION->Add(lineaZZ);
 		}
 		archivoOpenc.close();
 		
@@ -470,8 +521,11 @@ void main() {
 			}
 			
 			filename.push_back(Name);
+			avl_filename->Add(Name);
 			extension.push_back(aPath.extension().string());
+			avl_extension->Add(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
+			avl_size->Add(fs::file_size(vec[i]));
 			//cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 
 		}
@@ -671,6 +725,7 @@ void main() {
 					{
 						cout << "Ingrese el parametro : "; cin >> num_3;
 						mostrar(MayorA(size, num_3), filename, extension, size, fecha, fechaCREACION);
+						//mostrarPorFiltroOrdenamiento_MenToMay(MayorA(size, num_3), filename, extension, size, fecha, fechaCREACION);
 					}
 					else if (desc_3 == 2)
 					{
@@ -704,6 +759,7 @@ void main() {
 					if (gaa == 1)
 					{
 						mostrar(ordenar_MenToMay<string>(filename), filename, extension, size, fecha, fechaCREACION);
+						
 					}
 					else if (gaa == 2)
 					{
@@ -730,6 +786,7 @@ void main() {
 				}
 				break;
 			}
+			
 			case 0: exit(1); break;
 
 			}
