@@ -1,0 +1,6 @@
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\cuno.txt
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\dos.txt
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\nmmswey.csv
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\perro.txt
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\RecienNacido.txt
+C:\\Users\\Josue\\source\\repos\\OK\\TF\\TF\\archivos\\tres.txt

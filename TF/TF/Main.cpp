@@ -402,11 +402,11 @@ void main() {
 		vector<int> size;
 		vector<string> fecha;
 		vector<string> fechaCREACION;
-		AVLTree<string>* avl_filename;
+		/*AVLTree<string>* avl_filename;
 		AVLTree<string>* avl_extension;		
 		AVLTree<string>* avl_fecha;
 		AVLTree<string>* avl_fechaCREACION;
-		AVLTree<int>* avl_size;
+		AVLTree<int>* avl_size;*/
 		vector<string> VecDireccion;
 		string lineaZZ;
 		vector<string> _nombre;
@@ -481,7 +481,7 @@ void main() {
 		{
 			getline(archivoOpenRead, lineaZZ);
 			fecha.push_back(lineaZZ);
-			avl_fecha->Add(lineaZZ);
+			//avl_fecha->Add(lineaZZ);
 		}
 		archivoOpenRead.close();
 
@@ -494,7 +494,7 @@ void main() {
 		{
 			getline(archivoOpenc, lineaZZ);
 			fechaCREACION.push_back(lineaZZ);
-			avl_fechaCREACION->Add(lineaZZ);
+			//avl_fechaCREACION->Add(lineaZZ);
 		}
 		archivoOpenc.close();
 		
@@ -521,11 +521,11 @@ void main() {
 			}
 			
 			filename.push_back(Name);
-			avl_filename->Add(Name);
+			//avl_filename->Add(Name);
 			extension.push_back(aPath.extension().string());
-			avl_extension->Add(aPath.extension().string());
+			//avl_extension->Add(aPath.extension().string());
 			size.push_back(fs::file_size(vec[i]));
-			avl_size->Add(fs::file_size(vec[i]));
+			//avl_size->Add(fs::file_size(vec[i]));
 			//cout << Name << "\t" << aPath.extension() << "\t\t" << fs::file_size(vec[i]) << "B" << endl;
 
 		}
@@ -653,7 +653,7 @@ void main() {
 				cout << "Nombre\t\tCodigo\tStock\tProduccion\tVencimiento" << endl;
 				for (int i = 0; i < vec.size(); i++)
 				{
-					cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;
+				  	cout << _nombre[i] << "\t\t" << _codigo[i] << "\t" << _stock[i] << "\t" << _produccion[i] << "\t" << _vencimiento[i] << endl;
 				}
 				string _eleccion;
 				cout << "Ingrese el nombre de la caracteristica para indexar : "; cin >> _eleccion;
